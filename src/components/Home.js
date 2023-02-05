@@ -1,4 +1,4 @@
-import { ChevronDownIcon, PlusIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon, CogIcon, MicrophoneIcon, PhoneIcon, PlusIcon } from '@heroicons/react/outline';
 import React from 'react';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {Navigate} from 'react-router-dom';
@@ -6,6 +6,7 @@ import { auth, db } from '../firebase';
 import Channel from './Channel';
 import ServerIcon from './ServerIcon';
 import {useCollection} from "react-firebase-hooks/firestore"
+import Chat from './Chat';
 
 function Home() {
   
@@ -56,6 +57,31 @@ function Home() {
                             ))}
                         </div>
                     </div>
+                    <div className='bg-discord_userSectionBg p-2 flex justify-between items-center space-x-8'>
+                        <div className='flex items-center space-x-1'>
+                            <img src={user?.photoURL} alt="" className='h-10 round-full' onClick={() => auth.signOut()} />
+                            <h4 className='text-white text-xs font-medium'>
+                                {user?.displayName}
+                                <span className='text-discord_userSectionText block'>
+                                    #{user?.uid.substring(0,4).toUpperCase()}
+                                </span>
+                            </h4>
+                        </div>
+                        <div className='text-gray-400 flex items-center'>
+                            <div className='icon-container'>
+                                <MicrophoneIcon className='h-5 icon'/>
+                            </div>
+                            <div className='icon-container'>
+                                <PhoneIcon className='h-5 icon'/>
+                            </div>
+                            <div className='icon-container'>
+                                <CogIcon className='h-5 icon'/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className='bg-discord_chatBg flex-grow'>
+                    <Chat />
                 </div>
             </div>        
         </>
