@@ -10,6 +10,7 @@
 * Firebase non-relational database
 * React Firebase hooks
 * Tailwind CSS
+* Google Authentication
 
 ## Features
 * Text channel CRD
