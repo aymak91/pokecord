@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { MenuIcon } from "@heroicons/react/outline";
 
 function Header() {
   return (
@@ -15,7 +16,9 @@ function Header() {
         </div>
 
         <div className="flex space-x-4">
-            <button className='bg-white p-2 rounded-full text-xs md:text-sm px-4 focus:outline-none hover:shadow-2x1 hover:text-discord_blurple transition duration-200 ease-in-out whitespace-nowrap font-medium'>Login</button>
+            <button className='bg-white p-2 rounded-full text-xs md:text-sm px-4 focus:outline-none hover:shadow-2xl hover:text-discord_blurple transition duration-200 ease-in-out whitespace-nowrap font-medium'>Login</button>
+            <MenuIcon className='h-9 text-white cursor-pointer lg:hidden' />
+
         </div>
     </header>
   )

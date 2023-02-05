@@ -12,6 +12,9 @@ module.exports = {
         discord_purple: "#5865f2",
         discord_green: "#3ba55c",
       },
+      height: {
+        "83vh": "83vh"
+      }
     },
   },
   plugins: [],
