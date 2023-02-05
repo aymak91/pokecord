@@ -33,7 +33,8 @@ module.exports = {
         discord_red: "#ed4245",
       },
       height: {
-        "83vh": "83vh"
+        "83vh": "83vh",
+        "10vh": "10vh"
       },
       borderRadius: ['hover', 'focus'],
       backgroundImage: {
