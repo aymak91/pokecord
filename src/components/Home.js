@@ -1,5 +1,5 @@
 import { ChevronDownIcon, CogIcon, MicrophoneIcon, PhoneIcon, PlusIcon } from '@heroicons/react/solid';
-import React from 'react';
+import React, {useState} from 'react';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {Navigate} from 'react-router-dom';
 import { auth, db } from '../firebase';
@@ -12,6 +12,7 @@ function Home() {
   
     const [user] = useAuthState(auth);
     const [channels] = useCollection(db.collection("channels"))
+    const [currChannel, setCurrChannel] = useState(null);
 
     const handleAddChannel = () => {
         const channelName = prompt("Enter a new channel name:");
@@ -32,10 +33,25 @@ function Home() {
                         <img src="https://rb.gy/kuaslg" alt="" className='h-5'/>
                     </div>
                     <hr className='border-gray-700 border w-8 mx-auto'></hr>
-                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/1024px-Pok%C3%A9mon_Dark_Type_Icon.svg.png" />
-                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/1024px-Pok%C3%A9mon_Electric_Type_Icon.svg.png" />
-                    <ServerIcon image="https://rb.gy/qidcpp" />
-                    <ServerIcon image="https://rb.gy/zxo0lz" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Bug_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Dark_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Dragon_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Electric_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Fairy_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Fighting_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Fire_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Flying_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Ghost_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Grass_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Ground_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Ice_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Normal_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Poison_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Psychic_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Rock_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Steel_icon_SV.png" />
+                    <ServerIcon image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Water_icon_SV.png" />
+
 
                     <div className='server-default hover:bg-discord_green group' >
                         <PlusIcon className="text-discord_green h-7 group-hover:text-white"/>
@@ -43,7 +59,7 @@ function Home() {
                 </div>
                 <div className='bg-discord_channelsBg flex flex-col min-w-max'>
                     <h2 className='flex text-white font-bold text-sm items-center justify-between border-b border-gray-800 p-4 hover:bg-discord_serverNameHoverBg'>
-                        Official PAPA Server... <ChevronDownIcon className='h-5 ml-2' />
+                        Pokemon League Server <ChevronDownIcon className='h-5 ml-2' />
                     </h2>
                     <div className='text-discord_channelText flex-grow overflow-y-scroll scrollbar-hide'>
                         <div className='flex items-center p-2 mb-2'>
@@ -53,7 +69,7 @@ function Home() {
                         </div>
                         <div className='flex flex-col space-y-2 px-2 mb-4'>
                             {channels?.docs.map((doc) => (
-                                <Channel key={doc.id} id={doc.id} channelName={doc.data().channelName}/>
+                                <Channel key={doc.id} id={doc.id} channelName={doc.data().channelName} currChannel={currChannel} setCurrChannel={setCurrChannel}/>
                             ))}
                         </div>
                     </div>

@@ -21,8 +21,6 @@ function Hero({signIn, user}) {
           </div>
         </div>
         <div className='flex-grow items-center'>
-          {/* <img src='https://i.ibb.co/RyVg3mN/lucario.png' alt='' className=""></img>
-          <img src='' alt=''></img> */}
         </div>
       </div>
     </div>
