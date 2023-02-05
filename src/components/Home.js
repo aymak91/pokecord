@@ -1,4 +1,4 @@
-import { ChevronDownIcon, CogIcon, MicrophoneIcon, PhoneIcon, PlusIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon, CogIcon, MicrophoneIcon, PhoneIcon, PlusIcon } from '@heroicons/react/solid';
 import React from 'react';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {Navigate} from 'react-router-dom';
