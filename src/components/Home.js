@@ -32,8 +32,8 @@ function Home() {
                         <img src="https://rb.gy/kuaslg" alt="" className='h-5'/>
                     </div>
                     <hr className='border-gray-700 border w-8 mx-auto'></hr>
-                    <ServerIcon image="https://rb.gy/qidcpp" />
-                    <ServerIcon image="https://rb.gy/zxo0lz" />
+                    <ServerIcon image="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Pok%C3%A9mon_Electric_Type_Icon.svg/1024px-Pok%C3%A9mon_Electric_Type_Icon.svg.png" />
+                    <ServerIcon image="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Pok%C3%A9mon_Fairy_Type_Icon.svg/1024px-Pok%C3%A9mon_Fairy_Type_Icon.svg.png" />
                     <ServerIcon image="https://rb.gy/qidcpp" />
                     <ServerIcon image="https://rb.gy/zxo0lz" />
 
