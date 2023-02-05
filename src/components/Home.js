@@ -2,13 +2,26 @@ import { ChevronDownIcon, PlusIcon } from '@heroicons/react/outline';
 import React from 'react';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import {Navigate} from 'react-router-dom';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import Channel from './Channel';
 import ServerIcon from './ServerIcon';
+import {useCollection} from "react-firebase-hooks/firestore"
 
 function Home() {
   
     const [user] = useAuthState(auth);
+    const [channels] = useCollection(db.collection("channels"))
+
+    const handleAddChannel = () => {
+        const channelName = prompt("Enter a new channel name:");
+
+        if (channelName) {
+            db.collection("channels").add({
+                channelName: channelName,
+            })
+        }
+    }
+
     return (
         <>
             {!user && <Navigate to="/" />}
@@ -35,10 +48,12 @@ function Home() {
                         <div className='flex items-center p-2 mb-2'>
                             <ChevronDownIcon className='h-3 mr-2'/>
                             <h4 className='font-semibold'>Channels</h4>
-                            <PlusIcon className='h-6 ml-auto cursor-pointer hover:text-white'/>
+                            <PlusIcon className='h-6 ml-auto cursor-pointer hover:text-white' onClick={handleAddChannel}/>
                         </div>
-                        <div>
-                            <Channel className='mb-14' />
+                        <div className='flex flex-col space-y-2 px-2 mb-4'>
+                            {channels?.docs.map((doc) => (
+                                <Channel key={doc.id} id={doc.id} channelName={doc.data().channelName}/>
+                            ))}
                         </div>
                     </div>
                 </div>

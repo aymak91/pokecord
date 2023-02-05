@@ -16,6 +16,7 @@ module.exports = {
         discord_channelsBg: "#2f3136",
         discord_serverNameHoverBg: "#34373c",
         discord_channelText: "#8e9297",
+        discord_channelHoverBg: "#3a3c43",
       },
       height: {
         "83vh": "83vh"
