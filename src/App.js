@@ -16,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Splash />} />
         <Route path="/channels" element={<Home />} />
+        <Route path="/channels/:id" element={<Home />} />
       </Routes>
     </Router>
   );

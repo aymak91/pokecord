@@ -11,11 +11,17 @@ module.exports = {
         discord_blurple: "#7289da",
         discord_purple: "#5865f2",
         discord_green: "#3ba55c",
+        discord_serverBg: "#36393f",
+        discord_serversBg: "#202225",
+        discord_channelsBg: "#2f3136",
+        discord_serverNameHoverBg: "#34373c",
+        discord_channelText: "#8e9297",
       },
       height: {
         "83vh": "83vh"
-      }
+      },
+      borderRadius: ['hover', 'focus'],
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar-hide")],
 }
