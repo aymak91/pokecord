@@ -27,6 +27,10 @@ module.exports = {
         discord_chatInputBg: "#40444b",
         discord_chatInputText: "#dcddde",
         discord_chatInput: "#72767d",
+        discord_messageBg: "#32353b",
+        discord_messageTimestamp: "#72767d",
+        discord_message: "#dcddde",
+        discord_red: "#ed4245",
       },
       height: {
         "83vh": "83vh"
