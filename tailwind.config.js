@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        discord_blue: "#295DE7",
+        discord_blue: "#404EED",
         discord_blurple: "#7289da",
         discord_purple: "#5865f2",
         discord_green: "#3ba55c",
@@ -36,6 +36,9 @@ module.exports = {
         "83vh": "83vh"
       },
       borderRadius: ['hover', 'focus'],
+      backgroundImage: {
+        'garchomp': "url('https://pokewalls.files.wordpress.com/2011/08/445garchomp1920x1200.jpg')"
+      }
     },
   },
   plugins: [require("tailwind-scrollbar-hide")],
