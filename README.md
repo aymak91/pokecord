@@ -13,7 +13,7 @@
 * Google Authentication
 
 ## Features
-* Text channel CRD
+* Text channel CRUD
 * Live messaging CURD
 
 ## Future Implementations
@@ -24,6 +24,5 @@
 * Notification system
 * Message reactions / emotes
 * User CRUD
-* Edit text channel names
 * Search messages
 * Friends CRUD
