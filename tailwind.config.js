@@ -31,6 +31,7 @@ module.exports = {
         discord_messageTimestamp: "#72767d",
         discord_message: "#dcddde",
         discord_red: "#ed4245",
+        discord_link: "#01adf1",
       },
       height: {
         "83vh": "83vh",

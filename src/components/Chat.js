@@ -1,6 +1,6 @@
 import { BellIcon, ChatIcon, EmojiHappyIcon, HashtagIcon, InboxIcon, QuestionMarkCircleIcon, SearchIcon, UsersIcon, GiftIcon, PlusCircleIcon } from '@heroicons/react/solid';
 import {useAuthState} from 'react-firebase-hooks/auth';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import {useSelector} from 'react-redux';
 import { selectChannelId, selectChannelName } from '../features/channelSlice';
 import {auth, db} from '../firebase';
@@ -15,6 +15,7 @@ function Chat() {
     const [user] = useAuthState(auth);
     const inputRef = useRef("");
     const chatRef = useRef(null);
+
     const [messages] = useCollection(
         channelId && 
         db
@@ -46,8 +47,9 @@ function Chat() {
         }
 
         inputRef.current.value = "";
-        scrollToBottom();
     }
+
+    useEffect(scrollToBottom)
 
     return (
         <div className='flex flex-col h-screen'>
@@ -89,9 +91,7 @@ function Chat() {
                 <PlusCircleIcon className='icon mr-4'/>
                 <form className='flex-grow'>
                     <input type="text" disabled={!channelId} placeholder={channelId ? `Message #${channelName}` : "Select a channel"} className="bg-transparent focus:outline-none text-discord_chatInputText w-full placeholder-discord_chatInput text-sm" ref={inputRef}/>
-                    <button hidden type="submit" onClick={sendMessage}>
-                        Send
-                    </button>
+                    <button hidden type="submit" onClick={sendMessage} />
                 </form>
                 <GiftIcon className='icon mr-2'/>
                 <EmojiHappyIcon className='icon'/>

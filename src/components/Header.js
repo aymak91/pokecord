@@ -17,7 +17,7 @@ function Header({signIn, user}) {
             <div className="hidden lg:flex space-x-6 text-white">
                 <a href="https://github.com/aymak91/pokecord" target="_blank" className="link">Github</a>
                 <a href="https://www.linkedin.com/in/alexanderyumak/" target="_blank" className="link">LinkedIn</a>
-                <a href="https://alexandermak.dev/" target="_blank" lassName="link" className='link'>About Me</a>
+                <a href="https://alexandermak.dev/" target="_blank" className='link'>About Me</a>
                 <a href="https://alexandermak.dev/#contact" target="_blank" className="link">Contact</a>
             </div>
 

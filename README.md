@@ -14,7 +14,7 @@
 
 ## Features
 * Text channel CRD
-* Live messaging CRD
+* Live messaging CURD
 
 ## Future Implementations
 * Add voice and video chat capabilities
@@ -25,6 +25,5 @@
 * Message reactions / emotes
 * User CRUD
 * Edit text channel names
-* Edit messages
 * Search messages
 * Friends CRUD
