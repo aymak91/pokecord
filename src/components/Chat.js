@@ -1,12 +1,13 @@
 import { BellIcon, ChatIcon, EmojiHappyIcon, HashtagIcon, InboxIcon, QuestionMarkCircleIcon, SearchIcon, UsersIcon, GiftIcon, PlusCircleIcon } from '@heroicons/react/solid';
 import {useAuthState} from 'react-firebase-hooks/auth';
 import { useEffect, useRef, useState } from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
 import { selectChannelId, selectChannelName } from '../features/channelSlice';
 import {auth, db} from '../firebase';
 import firebase from 'firebase/compat/app';
 import { useCollection } from "react-firebase-hooks/firestore";
 import Message from './Message'; 
+import { setChannelInfo } from '../features/channelSlice';
 
 
 function Chat() {
@@ -17,6 +18,7 @@ function Chat() {
     const chatRef = useRef(null);
     const [channelEdit, setChannelEdit] = useState(false);
     const [channelInput, setChannelInput] = useState(channelName);
+    const dispatch = useDispatch();
 
     const [messages] = useCollection(
         channelId && 
@@ -59,10 +61,18 @@ function Chat() {
 
     const handleEditChannel = (e) => {
         e.preventDefault();
-        db.collection("channels").doc(channelId).update({channelName: channelInput})
+        db.collection("channels").doc(channelId).update({channelName: channelInput});
+        dispatch(setChannelInfo({
+            channelId: channelId,
+            channelName: channelInput
+        }))
         setChannelEdit(false);
     }
 
+    useEffect(() => {
+        setChannelInput(channelName)
+    }, [channelName])
+    
     useEffect(scrollToBottom)
 
     return (

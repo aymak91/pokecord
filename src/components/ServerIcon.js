@@ -1,7 +1,6 @@
 import React from 'react'
 
 function ServerIcon({image, currServer, setCurrServer, type}) {
-  console.log(currServer, type, currServer === type)
   return (
     <>
       {currServer !== type ?
