@@ -1,6 +1,6 @@
 import { BellIcon, ChatIcon, EmojiHappyIcon, HashtagIcon, InboxIcon, QuestionMarkCircleIcon, SearchIcon, UsersIcon, GiftIcon, PlusCircleIcon } from '@heroicons/react/solid';
 import {useAuthState} from 'react-firebase-hooks/auth';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {useSelector} from 'react-redux';
 import { selectChannelId, selectChannelName } from '../features/channelSlice';
 import {auth, db} from '../firebase';
@@ -15,6 +15,8 @@ function Chat() {
     const [user] = useAuthState(auth);
     const inputRef = useRef("");
     const chatRef = useRef(null);
+    const [channelEdit, setChannelEdit] = useState(false);
+    const [channelInput, setChannelInput] = useState(channelName);
 
     const [messages] = useCollection(
         channelId && 
@@ -48,6 +50,18 @@ function Chat() {
 
         inputRef.current.value = "";
     }
+    const handleCloseEdit = (e) => {
+        if (e.keyCode === 27) {
+          setChannelEdit(false);
+          setChannelInput(channelName);
+        }
+    };
+
+    const handleEditChannel = (e) => {
+        e.preventDefault();
+        db.collection("channels").doc(channelId).update({channelName: channelInput})
+        setChannelEdit(false);
+    }
 
     useEffect(scrollToBottom)
 
@@ -55,8 +69,26 @@ function Chat() {
         <div className='flex flex-col h-screen'>
             <header className='flex items-center justify-between space-x-5 border-b border-gray-800 p-4 -mt-1'>
                 <div className='flex items-center space-x-1'>
-                    <HashtagIcon className='h-6 text-discord_chatHeader'/>
-                    <h4 className='text-white font-semibold'>{channelName}</h4>
+                    {
+                        channelEdit ? (
+                            <form>
+                                <input 
+                                    type="text"
+                                    value={channelInput}
+                                    onChange={e => setChannelInput(e.target.value)}
+                                    onKeyDown={handleCloseEdit}
+                                    autoFocus
+                                    autoComplete="off"
+                                    className='p-2.5 bg-discord_chatInputBg mr-0 rounded-lg text-discord_message focus:outline-none w-9/12'
+                                />
+                                <button hidden type="submit" onClick={handleEditChannel} />
+                            </form>
+                        ) :
+                        <>
+                            <HashtagIcon className='h-6 text-discord_chatHeader'/>
+                            <h4 className='text-white font-semibold' onClick={() => setChannelEdit(true)}>{channelName}</h4>
+                        </>
+                    }
                 </div>
                 <div className='flex space-x-3'>
                     <BellIcon className="icon"/>
