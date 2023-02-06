@@ -11,6 +11,7 @@ import Home from './components/Home';
 import Splash from './components/Splash';
 
 function App() {
+
   return (
     <Router>
       <Routes>

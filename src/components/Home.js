@@ -72,7 +72,7 @@ function Home() {
                     </div>
                 </div>
                 <div className='bg-discord_channelsBg flex flex-col min-w-max'>
-                    <h2 className='flex text-white font-bold text-sm items-center justify-between border-b border-gray-800 p-4 hover:bg-discord_serverNameHoverBg'>
+                    <h2 className='flex text-white font-bold text-sm items-center justify-between border-b border-gray-800 p-4 hover:bg-discord_serverNameHoverBg w-72'>
                         Pokemon League {currServer} Server <ChevronDownIcon className='h-5 ml-2' />
                     </h2>
                     <div className='text-discord_channelText flex-grow overflow-y-scroll scrollbar-hide'>
