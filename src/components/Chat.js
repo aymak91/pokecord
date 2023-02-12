@@ -41,7 +41,6 @@ function Chat({currServer}) {
 
     const sendMessage = (e) => {
         e.preventDefault();
-        console.log(currServer, channelId)
         if (inputRef.current.value !== "") {
             db.collection("servers").doc(currServer).collection("channels").doc(channelId).collection("messages").add({
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
@@ -63,7 +62,6 @@ function Chat({currServer}) {
 
     const handleEditChannel = (e) => {
         e.preventDefault();
-        console.log(currServer, channelId)
         db.collection("servers").doc(currServer).collection("channels").doc(channelId).update({channelName: channelInput});
         dispatch(setChannelInfo({
             channelId: channelId,
