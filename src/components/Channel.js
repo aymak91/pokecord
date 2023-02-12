@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 import { setChannelInfo } from '../features/channelSlice';
 
-function Channel({id, channelName,currChannel, setCurrChannel}) {
+function Channel({id, channelName,currChannel, setCurrChannel, currServer}) {
     const dispatch = useDispatch()
     const navigate = useNavigate();
 
@@ -14,7 +14,7 @@ function Channel({id, channelName,currChannel, setCurrChannel}) {
             channelName: channelName,
         }));
         setCurrChannel(id);
-        navigate(`/channels/${id}`);
+        navigate(`/${currServer}/channels/${id}`);
     };
 
     return (

@@ -11,18 +11,19 @@ import Chat from './Chat';
 function Home() {
   
     const [user] = useAuthState(auth);
-    const [channels] = useCollection(db.collection("channels"))
+    const [servers] = useCollection(db.collection("servers"));
+    const [currServer, setCurrServer] = useState("Bug");
+    const [channels] = useCollection(db.collection("servers").doc(currServer).collection("channels"));
     const [currChannel, setCurrChannel] = useState(null);
-    const [currServer, setCurrServer] = useState(null);
 
     const handleAddChannel = async () => {
         const channelName = prompt("Enter a new channel name:")?.trim();
-        const sameChannels = await db.collection("channels").where("channelName", "==", channelName).get()
+        const sameChannels = await db.collection("servers").doc(currServer).collection("channels").where("channelName", "==", channelName).get()
         
         if (!sameChannels.empty) {
             alert('Channel name already exists')
         } else if (channelName) {
-            db.collection("channels").add({
+            db.collection("servers").doc(currServer).collection("channels").add({
                 channelName: channelName,
             })
         }
@@ -34,6 +35,10 @@ function Home() {
             channelName: doc.data().channelName,
         }
     )).sort((a,b) => a.channelName.toUpperCase() > b.channelName.toUpperCase() ? 1 : a.channelName.toUpperCase() < b.channelName.toUpperCase() ? -1 : 0);
+
+    const workInProgess = () => {
+        alert("This feature is in progress");
+    }
 
     return (
         <>
@@ -47,27 +52,12 @@ function Home() {
                     </div>
 
                     <hr className='border-gray-700 border w-8 mx-auto'></hr>
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Bug" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Bug_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Dark" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Dark_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Dragon" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Dragon_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Electric" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Electric_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Fairy" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Fairy_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Fighting" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Fighting_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Fire" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Fire_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Flying" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Flying_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Ghost" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Ghost_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Grass" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Grass_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Ground" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Ground_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Ice" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Ice_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Normal" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Normal_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Poison" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Poison_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Psychic" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Psychic_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Rock" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Rock_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Steel" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Steel_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Water" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Water_icon_SV.png" />
+                    {servers?.docs.map((doc) => (
+                        <ServerIcon key={doc.id} currServer={currServer} setCurrServer={setCurrServer} type={doc.id} image={doc.data().serverImage}/>
+                    )) }
                     <div>
                         <div className='server-default hover:bg-discord_green group min-w-full' >
-                            <PlusIcon className="text-discord_green group-hover:text-white h-7"/>
+                            <PlusIcon className="text-discord_green group-hover:text-white h-7" onClick={workInProgess}/>
                         </div>
                     </div>
                 </div>
@@ -89,7 +79,7 @@ function Home() {
                                 </div>
                                 <div className='flex flex-col space-y-2 px-2 mb-4'>
                                     {channelList?.map((doc) => (
-                                        <Channel key={doc.channelId} id={doc.channelId} channelName={doc.channelName} currChannel={currChannel} setCurrChannel={setCurrChannel}/>
+                                        <Channel key={doc.channelId} id={doc.channelId} channelName={doc.channelName} currChannel={currChannel} setCurrChannel={setCurrChannel} currServer={currServer}/>
                                     ))}
                                 </div>
                             </>
@@ -108,10 +98,10 @@ function Home() {
                         </div>
                         <div className='text-gray-400 flex items-center'>
                             <div className='icon-container'>
-                                <MicrophoneIcon className='h-5 icon'/>
+                                <MicrophoneIcon className='h-5 icon' onClick={workInProgess}/>
                             </div>
                             <div className='icon-container'>
-                                <PhoneIcon className='h-5 icon'/>
+                                <PhoneIcon className='h-5 icon' onClick={workInProgess} />
                             </div>
                             <div className='icon-container'>
                                 <CogIcon className='h-5 icon' onClick={() => auth.signOut()}/>
@@ -120,7 +110,7 @@ function Home() {
                     </div>
                 </div>
                 <div className='bg-discord_chatBg flex-grow'>
-                    <Chat />
+                    <Chat currServer={currServer}/>
                 </div>
             </div>        
         </>

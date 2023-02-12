@@ -6,7 +6,7 @@ import {auth, db} from '../firebase';
 import {useSelector} from 'react-redux';
 import { selectChannelId } from '../features/channelSlice';
 
-function Message({id, message, timestamp, name, email, photoURL}) {
+function Message({id, message, timestamp, name, email, photoURL, currServer}) {
     const channelId = useSelector(selectChannelId);
     const [user] = useAuthState(auth);
     const [msgEdit, setMsgEdit] = useState(false);
@@ -24,7 +24,7 @@ function Message({id, message, timestamp, name, email, photoURL}) {
             email,
         }
 
-        db.collection("channels").doc(channelId).collection("messages").doc(id).update(messageData);
+        db.collection("servers").doc(currServer).collection("channels").doc(channelId).collection("messages").doc(id).update(messageData);
         setMsgEdit(false);
     }
 
@@ -75,7 +75,7 @@ function Message({id, message, timestamp, name, email, photoURL}) {
                     <div className='hover:bg-discord_purple p-1 rounded-sm text-discord_userSectionText hover:text-white cursor-pointer' onClick={() => setMsgEdit(true)}>
                         <PencilIcon className='h-5 opacity-0 group-hover:opacity-100'/>
                     </div>
-                    <div className='hover:bg-discord_red p-1 rounded-sm text-discord_red hover:text-white cursor-pointer' onClick={() => db.collection("channels").doc(channelId).collection("messages").doc(id).delete()}>
+                    <div className='hover:bg-discord_red p-1 rounded-sm text-discord_red hover:text-white cursor-pointer' onClick={() => db.collection("servers").doc(currServer).collection("channels").doc(channelId).collection("messages").doc(id).delete()}>
                         <TrashIcon className='h-5 opacity-0 group-hover:opacity-100'/>
                     </div>
                 </div>)
