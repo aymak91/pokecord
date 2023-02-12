@@ -11,18 +11,19 @@ import Chat from './Chat';
 function Home() {
   
     const [user] = useAuthState(auth);
-    const [channels] = useCollection(db.collection("channels"))
-    const [currChannel, setCurrChannel] = useState(null);
+    const [servers] = useCollection(db.collection("servers"));
     const [currServer, setCurrServer] = useState(null);
+    const [channels] = useCollection(db.collection("servers").doc("Bug").collection("channels"));
+    const [currChannel, setCurrChannel] = useState(null);
 
     const handleAddChannel = async () => {
         const channelName = prompt("Enter a new channel name:")?.trim();
-        const sameChannels = await db.collection("channels").where("channelName", "==", channelName).get()
+        const sameChannels = await db.collection("servers").doc(currServer).collection("channels").where("channelName", "==", channelName).get()
         
         if (!sameChannels.empty) {
             alert('Channel name already exists')
         } else if (channelName) {
-            db.collection("channels").add({
+            db.collection("servers").doc(currServer).collection("channels").add({
                 channelName: channelName,
             })
         }
@@ -47,24 +48,9 @@ function Home() {
                     </div>
 
                     <hr className='border-gray-700 border w-8 mx-auto'></hr>
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Bug" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Bug_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Dark" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Dark_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Dragon" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Dragon_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Electric" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Electric_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Fairy" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Fairy_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Fighting" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Fighting_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Fire" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Fire_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Flying" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Flying_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Ghost" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Ghost_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Grass" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Grass_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Ground" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Ground_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Ice" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Ice_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Normal" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Normal_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Poison" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Poison_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Psychic" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Psychic_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Rock" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Rock_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Steel" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Steel_icon_SV.png" />
-                    <ServerIcon currServer={currServer} setCurrServer={setCurrServer} type="Water" image="https://raw.githubusercontent.com/aymak91/pokecord/main/public/assets/types/Water_icon_SV.png" />
+                    {servers?.docs.map((doc) => (
+                        <ServerIcon key={doc.id} currServer={currServer} setCurrServer={setCurrServer} type={doc.id} image={doc.data().serverImage}/>
+                    )) }
                     <div>
                         <div className='server-default hover:bg-discord_green group min-w-full' >
                             <PlusIcon className="text-discord_green group-hover:text-white h-7"/>
