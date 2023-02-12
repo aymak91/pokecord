@@ -36,6 +36,10 @@ function Home() {
         }
     )).sort((a,b) => a.channelName.toUpperCase() > b.channelName.toUpperCase() ? 1 : a.channelName.toUpperCase() < b.channelName.toUpperCase() ? -1 : 0);
 
+    const workInProgess = () => {
+        alert("This feature is in progress");
+    }
+
     return (
         <>
             {!user && <Navigate to="/" />}
@@ -53,7 +57,7 @@ function Home() {
                     )) }
                     <div>
                         <div className='server-default hover:bg-discord_green group min-w-full' >
-                            <PlusIcon className="text-discord_green group-hover:text-white h-7"/>
+                            <PlusIcon className="text-discord_green group-hover:text-white h-7" onClick={workInProgess}/>
                         </div>
                     </div>
                 </div>
@@ -94,10 +98,10 @@ function Home() {
                         </div>
                         <div className='text-gray-400 flex items-center'>
                             <div className='icon-container'>
-                                <MicrophoneIcon className='h-5 icon'/>
+                                <MicrophoneIcon className='h-5 icon' onClick={workInProgess}/>
                             </div>
                             <div className='icon-container'>
-                                <PhoneIcon className='h-5 icon'/>
+                                <PhoneIcon className='h-5 icon' onClick={workInProgess} />
                             </div>
                             <div className='icon-container'>
                                 <CogIcon className='h-5 icon' onClick={() => auth.signOut()}/>
