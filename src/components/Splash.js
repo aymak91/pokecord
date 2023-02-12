@@ -16,7 +16,7 @@ function Splash() {
     e.preventDefault();
 
     auth.signInWithPopup(provider)
-        .then(() => navigate("/channels"))
+        .then(() => navigate("/Bug"))
         .catch((error) => alert(error.message));
 }
 

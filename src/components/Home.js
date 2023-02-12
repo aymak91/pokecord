@@ -12,8 +12,8 @@ function Home() {
   
     const [user] = useAuthState(auth);
     const [servers] = useCollection(db.collection("servers"));
-    const [currServer, setCurrServer] = useState(null);
-    const [channels] = useCollection(db.collection("servers").doc("Bug").collection("channels"));
+    const [currServer, setCurrServer] = useState("Bug");
+    const [channels] = useCollection(db.collection("servers").doc(currServer).collection("channels"));
     const [currChannel, setCurrChannel] = useState(null);
 
     const handleAddChannel = async () => {
@@ -75,7 +75,7 @@ function Home() {
                                 </div>
                                 <div className='flex flex-col space-y-2 px-2 mb-4'>
                                     {channelList?.map((doc) => (
-                                        <Channel key={doc.channelId} id={doc.channelId} channelName={doc.channelName} currChannel={currChannel} setCurrChannel={setCurrChannel}/>
+                                        <Channel key={doc.channelId} id={doc.channelId} channelName={doc.channelName} currChannel={currChannel} setCurrChannel={setCurrChannel} currServer={currServer}/>
                                     ))}
                                 </div>
                             </>
@@ -106,7 +106,7 @@ function Home() {
                     </div>
                 </div>
                 <div className='bg-discord_chatBg flex-grow'>
-                    <Chat />
+                    <Chat currServer={currServer}/>
                 </div>
             </div>        
         </>

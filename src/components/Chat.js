@@ -10,7 +10,7 @@ import Message from './Message';
 import { setChannelInfo } from '../features/channelSlice';
 
 
-function Chat() {
+function Chat({currServer}) {
     const channelId = useSelector(selectChannelId);
     const channelName = useSelector(selectChannelName);
     const [user] = useAuthState(auth);
@@ -23,6 +23,8 @@ function Chat() {
     const [messages] = useCollection(
         channelId && 
         db
+            .collection("servers")
+            .doc(currServer)
             .collection("channels")
             .doc(channelId)
             .collection("messages")
@@ -39,9 +41,9 @@ function Chat() {
 
     const sendMessage = (e) => {
         e.preventDefault();
-
+        console.log(currServer, channelId)
         if (inputRef.current.value !== "") {
-            db.collection("channels").doc(channelId).collection("messages").add({
+            db.collection("servers").doc(currServer).collection("channels").doc(channelId).collection("messages").add({
                 timestamp: firebase.firestore.FieldValue.serverTimestamp(),
                 message: inputRef.current.value,
                 name: user?.displayName,
@@ -61,7 +63,8 @@ function Chat() {
 
     const handleEditChannel = (e) => {
         e.preventDefault();
-        db.collection("channels").doc(channelId).update({channelName: channelInput});
+        console.log(currServer, channelId)
+        db.collection("servers").doc(currServer).collection("channels").doc(channelId).update({channelName: channelInput});
         dispatch(setChannelInfo({
             channelId: channelId,
             channelName: channelInput
@@ -124,6 +127,7 @@ function Chat() {
                             name={name}
                             photoURL={photoURL}
                             email={email}
+                            currServer={currServer}
                         />
                     );
                 })}

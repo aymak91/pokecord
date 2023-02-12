@@ -22,7 +22,7 @@ function Header({signIn, user}) {
             </div>
 
             <div className="flex space-x-4">
-                <button className='bg-white p-2 rounded-full text-xs md:text-sm px-4 focus:outline-none hover:shadow-2xl hover:text-discord_blurple transition duration-200 ease-in-out whitespace-nowrap font-medium' onClick={!user ? signIn : () => navigate("/channels")}>
+                <button className='bg-white p-2 rounded-full text-xs md:text-sm px-4 focus:outline-none hover:shadow-2xl hover:text-discord_blurple transition duration-200 ease-in-out whitespace-nowrap font-medium' onClick={!user ? signIn : () => navigate("/Bug")}>
                     {!user ? "Login" : "Open Discord"}
                 </button>
                 <MenuIcon className='h-9 text-white cursor-pointer lg:hidden' />

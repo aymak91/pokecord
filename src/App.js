@@ -16,8 +16,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Splash />} />
-        <Route path="/channels" element={<Home />} />
-        <Route path="/channels/:id" element={<Home />} />
+        <Route path="/:serverId/" element={<Home />} />
+        <Route path="/:serverId/channels/:id" element={<Home />} />
+        <Route path="/*" element="404 Not Found" />
       </Routes>
     </Router>
   );
