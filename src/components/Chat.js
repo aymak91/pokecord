@@ -102,9 +102,12 @@ function Chat({currServer}) {
                     }
                 </div>
                 <div className='flex space-x-3'>
-                    <BellIcon className="icon"/>
+                    {/* <BellIcon className="icon"/>
                     <ChatIcon className="icon"/>
-                    <UsersIcon className="icon"/>
+                    <UsersIcon className="icon"/> */}
+                    <a href="https://alexandermak.dev/" target="_blank"><i className='fas fa-user-circle fa-lg pb-2 px-2 icon'></i></a>
+                    <a href="https://www.linkedin.com/in/alexanderyumak/" target="_blank"><i className="fab fa-linkedin-in fa-lg pb-2 px-2 icon"></i></a>
+                    <a href="https://github.com/aymak91" target="_blank"><i className="fab fa-github fa-lg pb-2 px-2 icon"></i></a>
                     <div className='flex bg-discord_chatHeaderInputBg text-xs pl-1 rounded-md'>
                         <input type="text" placeholder='Search' className='bg-transparent focus:outline-none text-white p-1 placeholder-discord_chatHeader' />
                         <SearchIcon className='h-4 text-discord_chatHeader mr-1 mt-1'/>
