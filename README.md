@@ -14,7 +14,7 @@
 
 ## Features
 * Text channel CRUD
-* Live messaging CURD
+* Live messaging CRUD
 
 ## Future Implementations
 * Add voice and video chat capabilities
