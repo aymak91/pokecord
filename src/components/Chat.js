@@ -1,13 +1,12 @@
-import { BellIcon, ChatIcon, EmojiHappyIcon, HashtagIcon, InboxIcon, QuestionMarkCircleIcon, SearchIcon, UsersIcon, GiftIcon, PlusCircleIcon } from '@heroicons/react/solid';
-import {useAuthState} from 'react-firebase-hooks/auth';
+import { EmojiHappyIcon, HashtagIcon, InboxIcon, QuestionMarkCircleIcon, SearchIcon, UsersIcon, GiftIcon, PlusCircleIcon } from '@heroicons/react/solid';
 import { useEffect, useRef, useState } from 'react';
 import {useSelector,useDispatch} from 'react-redux';
-import { selectChannelId, selectChannelName } from '../features/channelSlice';
-import {auth, db} from '../firebase';
 import firebase from 'firebase/compat/app';
+import {auth, db} from '../firebase';
+import {useAuthState} from 'react-firebase-hooks/auth';
 import { useCollection } from "react-firebase-hooks/firestore";
 import Message from './Message'; 
-import { setChannelInfo } from '../features/channelSlice';
+import { setChannelInfo, selectChannelId, selectChannelName } from '../features/channelSlice';
 
 
 function Chat({currServer}) {
@@ -42,12 +41,17 @@ function Chat({currServer}) {
     const sendMessage = (e) => {
         e.preventDefault();
         if (inputRef.current.value !== "") {
-            db.collection("servers").doc(currServer).collection("channels").doc(channelId).collection("messages").add({
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                message: inputRef.current.value,
-                name: user?.displayName,
-                photoURL: user?.photoURL,
-                email: user?.email,
+            db.collection("servers")
+                .doc(currServer)
+                .collection("channels")
+                .doc(channelId)
+                .collection("messages")
+                .add({
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    message: inputRef.current.value,
+                    name: user?.displayName,
+                    photoURL: user?.photoURL,
+                    email: user?.email,
             })
         }
 
@@ -62,7 +66,13 @@ function Chat({currServer}) {
 
     const handleEditChannel = (e) => {
         e.preventDefault();
-        db.collection("servers").doc(currServer).collection("channels").doc(channelId).update({channelName: channelInput});
+        db
+            .collection("servers")
+            .doc(currServer)
+            .collection("channels")
+            .doc(channelId)
+            .update({channelName: channelInput});
+            
         dispatch(setChannelInfo({
             channelId: channelId,
             channelName: channelInput
@@ -102,9 +112,6 @@ function Chat({currServer}) {
                     }
                 </div>
                 <div className='flex space-x-3'>
-                    {/* <BellIcon className="icon"/>
-                    <ChatIcon className="icon"/>
-                    <UsersIcon className="icon"/> */}
                     <a href="https://alexandermak.dev/" target="_blank"><i className='fas fa-user-circle fa-lg pb-2 px-2 icon'></i></a>
                     <a href="https://www.linkedin.com/in/alexanderyumak/" target="_blank"><i className="fab fa-linkedin-in fa-lg pb-2 px-2 icon"></i></a>
                     <a href="https://github.com/aymak91" target="_blank"><i className="fab fa-github fa-lg pb-2 px-2 icon"></i></a>
